@@ -1,39 +1,29 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../services/supabaseClient";
 
-const OAuthCallback = () => {
+function AuthCallback() {
   const navigate = useNavigate();
-  const { isAuthenticated, authReady, user, session } = useAuth();
 
   useEffect(() => {
-    console.log('[OAuthCallback] Debug state:', {
-      authReady,
-      isAuthenticated,
-      hasUser: !!user,
-      hasSession: !!session,
-      userId: user?.id,
-      userEmail: user?.email,
-      currentUrl: window.location.href
-    });
+    const handleAuth = async () => {
+      // Small delay to ensure Supabase has parsed the URL tokens
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const { data, error } = await supabase.auth.getSession();
 
-    // Wait for AuthContext to process the OAuth session
-    if (!authReady) {
-      console.log('[OAuthCallback] Waiting for auth to be ready...');
-      return;
-    }
-
-    // Give more time for session to be established
-    setTimeout(() => {
-      if (isAuthenticated) {
-        console.log('[OAuthCallback] Session established, redirecting to dashboard');
-        navigate('/dashboard', { replace: true });
+      if (data?.session) {
+        console.log("[AuthCallback] Session found, navigating to dashboard");
+        navigate("/dashboard", { replace: true });
       } else {
-        console.warn('[OAuthCallback] No session found after OAuth, redirecting to login');
-        navigate('/login', { replace: true });
+        if (error) console.error("[AuthCallback] Error getting session:", error.message);
+        console.warn("[AuthCallback] No session found, redirecting to login");
+        navigate("/login", { replace: true });
       }
-    }, 2000); // 2 second delay to allow session processing
-  }, [isAuthenticated, authReady, navigate, user, session]);
+    };
+
+    handleAuth();
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f9fafb]">
@@ -43,6 +33,6 @@ const OAuthCallback = () => {
       </div>
     </div>
   );
-};
+}
 
-export default OAuthCallback;
+export default AuthCallback;
