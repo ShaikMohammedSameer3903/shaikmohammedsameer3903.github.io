@@ -45,104 +45,48 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const initializeAuth = useCallback(async () => {
+  useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
-    
-    console.log('[Auth] Initializing...');
-    setStatus(AUTH_STATUS.LOADING);
 
-    // Safety timeout: Ensure authReady is set even if Supabase hangs
-    const timeoutId = setTimeout(() => {
-      console.warn('[Auth] Initialization timed out, forcing authReady');
-      setAuthReady(true);
-    }, 5000);
-
-    try {
-      if (!supabase) {
-        console.warn('[Auth] Supabase not available');
-        setStatus(AUTH_STATUS.UNAUTHENTICATED);
-        setAuthReady(true);
-        return;
-      }
-
-      // 1. Get initial session from Supabase ONLY
-      const { data: { session: initialSession }, error } = await supabase.auth.getSession();
+    const initializeAuth = async () => {
+      setStatus(AUTH_STATUS.LOADING);
+      const { data: { session: initialSession } } = await supabase.auth.getSession();
       
-      if (error) throw error;
-
       if (initialSession) {
-        console.log('[Auth] Session found');
         setSession(initialSession);
         setUser(initialSession.user);
-        
-        // 2. Fetch profile and connect socket
         await fetchProfile();
         websocketService.connect();
-        
         setStatus(AUTH_STATUS.AUTHENTICATED);
       } else {
-        console.log('[Auth] No session found');
-        setSession(null);
-        setUser(null);
-        setProfile(null);
         setStatus(AUTH_STATUS.UNAUTHENTICATED);
       }
-    } catch (err) {
-      console.error('[Auth] Initialization error:', err.message);
-      setStatus(AUTH_STATUS.UNAUTHENTICATED);
-    } finally {
-      clearTimeout(timeoutId);
-      console.log('[Auth] Initialization complete');
       setAuthReady(true);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchProfile]);
+    };
 
-  useEffect(() => {
     initializeAuth();
 
-    if (!supabase) return;
-
-    // Listen for auth changes from Supabase ONLY
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      console.log(`[Auth] Event: ${event}`, {
-        hasSession: !!currentSession,
-        userId: currentSession?.user?.id,
-        userEmail: currentSession?.user?.email
-      });
-      
       if (currentSession) {
-        console.log('[Auth] Session active, setting authenticated state');
         setSession(currentSession);
         setUser(currentSession.user);
-        
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
-          console.log('[Auth] Processing sign-in event');
           await fetchProfile();
           websocketService.connect();
-          setStatus(AUTH_STATUS.AUTHENTICATED);
-        } else if (event === 'TOKEN_REFRESHED') {
-          console.log('[Auth] Token refreshed');
-          setStatus(AUTH_STATUS.AUTHENTICATED);
         }
+        setStatus(AUTH_STATUS.AUTHENTICATED);
       } else {
-        console.log('[Auth] Session ended');
         setSession(null);
         setUser(null);
         setProfile(null);
         websocketService.disconnect();
         setStatus(AUTH_STATUS.UNAUTHENTICATED);
       }
-      
-      // Ensure authReady is set on state change if it wasn't already
       setAuthReady(true);
     });
 
-    return () => {
-      subscription?.unsubscribe();
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => subscription?.unsubscribe();
   }, [fetchProfile]);
 
   const signOut = async () => {
@@ -156,11 +100,10 @@ export const AuthProvider = ({ children }) => {
       setProfile(null);
       setStatus(AUTH_STATUS.UNAUTHENTICATED);
       
-      // Use hash-safe redirect
-      window.location.hash = '#/login';
+      window.location.href = '/';
     } catch (error) {
       console.error('[Auth] Sign out error:', error);
-      window.location.hash = '#/login';
+      window.location.href = '/';
     } finally {
       setAuthReady(true);
     }

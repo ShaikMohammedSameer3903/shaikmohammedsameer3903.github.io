@@ -1,18 +1,16 @@
-import React, { Suspense, lazy } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import './polyfills'; // Load polyfills before other modules
-import './utils/errorHandler'; // Initialize global error handler
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { supabase } from './services/supabaseClient';
+import './polyfills'; 
+import './utils/errorHandler'; 
 import { PipelineProvider } from './contexts/PipelineContext';
 import { NotificationProvider } from './contexts/NotificationContext';
 import { ToastProvider } from './components/ToastProvider';
 import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
-import SessionManager from './components/SessionManager';
-import AppWrapper from './components/AppWrapper';
 
-// Lazy load pages with error handling for code splitting
+// Lazy load pages
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Templates = lazy(() => import('./pages/Templates'));
@@ -33,39 +31,74 @@ const PageLoader = () => (
 );
 
 function App() {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 1. Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    // 2. Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) return <PageLoader />;
+
   return (
     <ErrorBoundary>
       <ToastProvider>
         <AuthProvider>
           <NotificationProvider>
             <PipelineProvider>
-              <SessionManager />
               <Router>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
-                    <Route element={<AppWrapper />}>
-                      {/* Public Routes — always accessible, no redirect */}
-                      <Route path="/" element={<LandingPage />} />
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route path="/register" element={<Register />} />
-                      
-                      {/* Simplified Callback Route */}
-                      <Route path="/auth/callback" element={<div />} />
+                    {/* Public routes only accessible when logged out */}
+                    <Route 
+                      path="/" 
+                      element={session ? <Navigate to="/dashboard" replace /> : <LandingPage />} 
+                    />
+                    <Route 
+                      path="/login" 
+                      element={session ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
+                    />
+                    <Route 
+                      path="/register" 
+                      element={session ? <Navigate to="/dashboard" replace /> : <Register />} 
+                    />
 
-                      {/* Protected Routes — redirect to /login only if not authenticated */}
-                      <Route element={<ProtectedRoute />}>
-                        <Route element={<Layout />}>
-                          <Route path="/dashboard" element={<ErrorBoundary name="Dashboard"><Dashboard /></ErrorBoundary>} />
-                          <Route path="/templates" element={<ErrorBoundary name="Templates"><Templates /></ErrorBoundary>} />
-                          <Route path="/pipeline-builder" element={<ErrorBoundary name="PipelineBuilder"><PipelineBuilder /></ErrorBoundary>} />
-                          <Route path="/my-pipelines" element={<ErrorBoundary name="MyPipelines"><MyPipelines /></ErrorBoundary>} />
-                          <Route path="/settings" element={<ErrorBoundary name="Settings"><AccountSettings /></ErrorBoundary>} />
-                        </Route>
-                      </Route>
-                    </Route>
+                    {/* Protected routes only accessible when logged in */}
+                    <Route 
+                      path="/dashboard" 
+                      element={session ? <Layout><Dashboard /></Layout> : <Navigate to="/login" replace />} 
+                    />
+                    <Route 
+                      path="/templates" 
+                      element={session ? <Layout><Templates /></Layout> : <Navigate to="/login" replace />} 
+                    />
+                    <Route 
+                      path="/pipeline-builder" 
+                      element={session ? <Layout><PipelineBuilder /></Layout> : <Navigate to="/login" replace />} 
+                    />
+                    <Route 
+                      path="/my-pipelines" 
+                      element={session ? <Layout><MyPipelines /></Layout> : <Navigate to="/login" replace />} 
+                    />
+                    <Route 
+                      path="/settings" 
+                      element={session ? <Layout><AccountSettings /></Layout> : <Navigate to="/login" replace />} 
+                    />
 
-                    {/* Catch-all → redirect unknown routes to landing */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* Catch-all */}
+                    <Route path="*" element={<Navigate to={session ? "/dashboard" : "/"} replace />} />
                   </Routes>
                 </Suspense>
               </Router>
