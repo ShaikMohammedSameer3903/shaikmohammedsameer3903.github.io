@@ -9,8 +9,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
-import { SessionManager } from './components/SessionManager';
-import { OAuthDetector } from './components/OAuthDetector';
+import SessionManager from './components/SessionManager';
+import OAuthDetector from './components/OAuthDetector';
 
 // Lazy load pages with error handling for code splitting
 const LandingPage = lazy(() => import('./pages/LandingPage'));
