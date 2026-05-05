@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import SessionManager from './components/SessionManager';
-import OAuthDetector from './components/OAuthDetector';
+import AppWrapper from './components/AppWrapper';
 
 // Lazy load pages with error handling for code splitting
 const LandingPage = lazy(() => import('./pages/LandingPage'));
@@ -40,26 +40,27 @@ function App() {
           <NotificationProvider>
             <PipelineProvider>
               <SessionManager />
-              <OAuthDetector />
               <Router>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
-                    {/* Public Routes — always accessible, no redirect */}
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<Register />} />
-                    
-                    {/* Simplified Callback Route */}
-                    <Route path="/auth/callback" element={<OAuthDetector />} />
+                    <Route element={<AppWrapper />}>
+                      {/* Public Routes — always accessible, no redirect */}
+                      <Route path="/" element={<LandingPage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/register" element={<Register />} />
+                      
+                      {/* Simplified Callback Route */}
+                      <Route path="/auth/callback" element={<div />} />
 
-                    {/* Protected Routes — redirect to /login only if not authenticated */}
-                    <Route element={<ProtectedRoute />}>
-                      <Route element={<Layout />}>
-                        <Route path="/dashboard" element={<ErrorBoundary name="Dashboard"><Dashboard /></ErrorBoundary>} />
-                        <Route path="/templates" element={<ErrorBoundary name="Templates"><Templates /></ErrorBoundary>} />
-                        <Route path="/pipeline-builder" element={<ErrorBoundary name="PipelineBuilder"><PipelineBuilder /></ErrorBoundary>} />
-                        <Route path="/my-pipelines" element={<ErrorBoundary name="MyPipelines"><MyPipelines /></ErrorBoundary>} />
-                        <Route path="/settings" element={<ErrorBoundary name="Settings"><AccountSettings /></ErrorBoundary>} />
+                      {/* Protected Routes — redirect to /login only if not authenticated */}
+                      <Route element={<ProtectedRoute />}>
+                        <Route element={<Layout />}>
+                          <Route path="/dashboard" element={<ErrorBoundary name="Dashboard"><Dashboard /></ErrorBoundary>} />
+                          <Route path="/templates" element={<ErrorBoundary name="Templates"><Templates /></ErrorBoundary>} />
+                          <Route path="/pipeline-builder" element={<ErrorBoundary name="PipelineBuilder"><PipelineBuilder /></ErrorBoundary>} />
+                          <Route path="/my-pipelines" element={<ErrorBoundary name="MyPipelines"><MyPipelines /></ErrorBoundary>} />
+                          <Route path="/settings" element={<ErrorBoundary name="Settings"><AccountSettings /></ErrorBoundary>} />
+                        </Route>
                       </Route>
                     </Route>
 
