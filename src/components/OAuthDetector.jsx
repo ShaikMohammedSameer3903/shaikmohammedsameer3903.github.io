@@ -60,7 +60,14 @@ function OAuthDetector() {
           if (error) throw error;
 
           console.log("[OAuthDetector] Session set successfully, redirecting to dashboard");
-          navigate("/dashboard", { replace: true });
+          console.log("[OAuthDetector] Current URL before redirect:", window.location.href);
+          
+          // Add a small delay to ensure session is fully established
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Force navigation to dashboard with replace
+          window.location.hash = "#/dashboard";
+          console.log("[OAuthDetector] Forced hash navigation to #/dashboard");
         } catch (err) {
           console.error("[OAuthDetector] Error setting session:", err.message);
           navigate("/login", { replace: true });
@@ -78,7 +85,9 @@ function OAuthDetector() {
           
           if (data.session) {
             console.log("[OAuthDetector] Session exists, redirecting to dashboard");
-            navigate("/dashboard", { replace: true });
+            // Force navigation to dashboard with hash
+            window.location.hash = "#/dashboard";
+            console.log("[OAuthDetector] Forced hash navigation to #/dashboard");
           }
         } catch (e) {
           console.error("[OAuthDetector] Error checking session:", e);
