@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative path for both GitHub Pages and custom domain
+  base: '/', // Use absolute path to ensure assets load correctly on all routes
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
