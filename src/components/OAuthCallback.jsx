@@ -1,3 +1,4 @@
+// Updated: 2026-05-05 20:03 - OAuth callback fix
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../services/supabaseClient";
