@@ -106,18 +106,24 @@ export const AuthProvider = ({ children }) => {
 
     // Listen for auth changes from Supabase ONLY
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      console.log(`[Auth] Event: ${event}`);
+      console.log(`[Auth] Event: ${event}`, {
+        hasSession: !!currentSession,
+        userId: currentSession?.user?.id,
+        userEmail: currentSession?.user?.email
+      });
       
       if (currentSession) {
-        console.log('[Auth] Session active');
+        console.log('[Auth] Session active, setting authenticated state');
         setSession(currentSession);
         setUser(currentSession.user);
         
         if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+          console.log('[Auth] Processing sign-in event');
           await fetchProfile();
           websocketService.connect();
           setStatus(AUTH_STATUS.AUTHENTICATED);
         } else if (event === 'TOKEN_REFRESHED') {
+          console.log('[Auth] Token refreshed');
           setStatus(AUTH_STATUS.AUTHENTICATED);
         }
       } else {

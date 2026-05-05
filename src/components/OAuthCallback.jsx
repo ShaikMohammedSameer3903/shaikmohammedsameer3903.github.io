@@ -4,20 +4,35 @@ import { useAuth } from '../contexts/AuthContext';
 
 const OAuthCallback = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, authReady } = useAuth();
+  const { isAuthenticated, authReady, user, session } = useAuth();
 
   useEffect(() => {
-    // Wait for AuthContext to process the OAuth session
-    if (!authReady) return;
+    console.log('[OAuthCallback] Debug state:', {
+      authReady,
+      isAuthenticated,
+      hasUser: !!user,
+      hasSession: !!session,
+      userId: user?.id,
+      userEmail: user?.email
+    });
 
-    if (isAuthenticated) {
-      console.log('[OAuthCallback] Session established, redirecting to dashboard');
-      navigate('/dashboard', { replace: true });
-    } else {
-      console.warn('[OAuthCallback] No session found after OAuth, redirecting to login');
-      navigate('/login', { replace: true });
+    // Wait for AuthContext to process the OAuth session
+    if (!authReady) {
+      console.log('[OAuthCallback] Waiting for auth to be ready...');
+      return;
     }
-  }, [isAuthenticated, authReady, navigate]);
+
+    // Give more time for session to be established
+    setTimeout(() => {
+      if (isAuthenticated) {
+        console.log('[OAuthCallback] Session established, redirecting to dashboard');
+        navigate('/dashboard', { replace: true });
+      } else {
+        console.warn('[OAuthCallback] No session found after OAuth, redirecting to login');
+        navigate('/login', { replace: true });
+      }
+    }, 2000); // 2 second delay to allow session processing
+  }, [isAuthenticated, authReady, navigate, user, session]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f9fafb]">
