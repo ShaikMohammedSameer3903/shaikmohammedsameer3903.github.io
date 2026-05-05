@@ -21,7 +21,6 @@ const MyPipelines = lazy(() => import('./pages/MyPipelines'));
 const AccountSettings = lazy(() => import('./pages/AccountSettings'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const Register = lazy(() => import('./pages/Register'));
-const OAuthCallback = lazy(() => import('./components/OAuthCallback'));
 
 // Loading fallback
 const PageLoader = () => (
@@ -52,7 +51,6 @@ function App() {
                     
                     {/* Simplified Callback Route */}
                     <Route path="/auth/callback" element={<OAuthDetector />} />
-                    <Route path="/callback" element={<OAuthDetector />} />
 
                     {/* Protected Routes — redirect to /login only if not authenticated */}
                     <Route element={<ProtectedRoute />}>
