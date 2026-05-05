@@ -92,14 +92,18 @@ export const AuthProvider = ({ children }) => {
   const signOut = async () => {
     setStatus(AUTH_STATUS.LOADING);
     try {
-      if (supabase) await supabase.auth.signOut();
+      if (supabase) {
+        await supabase.auth.signOut();
+      }
       
+      // Full cleanup
       websocketService.disconnect();
       setUser(null);
       setSession(null);
       setProfile(null);
       setStatus(AUTH_STATUS.UNAUTHENTICATED);
       
+      // Force hard reload to clear all states and navigate home
       window.location.href = '/';
     } catch (error) {
       console.error('[Auth] Sign out error:', error);

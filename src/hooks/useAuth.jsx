@@ -79,9 +79,10 @@ export function AuthHeader() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      navigate('/login');
     } catch (error) {
       console.error('Sign out error:', error);
+      // Fallback in case signOut fails
+      window.location.href = '/';
     }
   };
 
