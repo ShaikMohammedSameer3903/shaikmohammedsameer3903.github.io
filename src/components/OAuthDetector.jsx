@@ -9,16 +9,18 @@ function OAuthDetector() {
   useEffect(() => {
     const handleOAuth = async () => {
       // 1. Check if tokens are in the hash (Supabase standard)
-      const hash = window.location.hash || location.hash;
-      if (!hash || !hash.includes('access_token=')) return;
+      const fullHash = window.location.hash || location.hash;
+      if (!fullHash || !fullHash.includes('access_token=')) return;
 
       console.log("[OAuthDetector] Detecting tokens in hash...");
 
-      // Parse hash manually to be safe with HashRouter
-      const hashContent = hash.includes('#') ? hash.split('#')[1] : hash;
-      const actualTokens = hashContent.includes('#') ? hashContent.split('#')[1] : hashContent;
+      // Split by '#' and find the segment containing access_token
+      const parts = fullHash.split('#');
+      const tokenPart = parts.find(p => p.includes('access_token='));
       
-      const params = new URLSearchParams(actualTokens.startsWith('?') ? actualTokens : '?' + actualTokens);
+      if (!tokenPart) return;
+
+      const params = new URLSearchParams(tokenPart.startsWith('?') ? tokenPart : '?' + tokenPart);
       const accessToken = params.get('access_token');
       const refreshToken = params.get('refresh_token');
 

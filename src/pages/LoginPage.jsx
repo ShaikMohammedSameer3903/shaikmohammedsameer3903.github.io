@@ -58,7 +58,7 @@ function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://pipeline-pro.tech/auth/callback'
+          redirectTo: 'https://pipeline-pro.tech'
         }
       });
       if (error) throw error;
@@ -88,7 +88,7 @@ function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: 'https://pipeline-pro.tech/auth/callback'
+          redirectTo: 'https://pipeline-pro.tech'
         }
       });
       if (error) throw error;

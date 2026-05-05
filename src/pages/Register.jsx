@@ -38,7 +38,7 @@ function Register() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://pipeline-pro.tech/auth/callback'
+          redirectTo: 'https://pipeline-pro.tech'
         }
       });
 
@@ -63,7 +63,7 @@ function Register() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: 'https://pipeline-pro.tech/auth/callback'
+          redirectTo: 'https://pipeline-pro.tech'
         }
       });
 
@@ -122,7 +122,7 @@ function Register() {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: 'https://pipeline-pro.tech/auth/callback'
+          emailRedirectTo: 'https://pipeline-pro.tech'
         }
       });
 
