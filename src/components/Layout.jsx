@@ -11,7 +11,7 @@ import {
   Plus
 } from 'lucide-react';
 
-function Layout() {
+function Layout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -81,7 +81,7 @@ function Layout() {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 pb-32 md:pb-8"
           >
-            <Outlet />
+            {children || <Outlet />}
           </motion.div>
         </main>
 
