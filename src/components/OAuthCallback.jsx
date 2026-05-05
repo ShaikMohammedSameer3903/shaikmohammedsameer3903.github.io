@@ -13,7 +13,8 @@ const OAuthCallback = () => {
       hasUser: !!user,
       hasSession: !!session,
       userId: user?.id,
-      userEmail: user?.email
+      userEmail: user?.email,
+      currentUrl: window.location.href
     });
 
     // Wait for AuthContext to process the OAuth session
