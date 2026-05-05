@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Variables Test</title>
+</head>
+<body>
+    <h1>Environment Variables Test</h1>
+    <div id="env-vars"></div>
+    
+    <script>
+        // Test if environment variables are available in production
+        const envVars = {
+            VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+            VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY ? 'SET' : 'MISSING',
+            VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
+            MODE: import.meta.env.MODE
+        };
+        
+        document.getElementById('env-vars').innerHTML = `
+            <h2>Environment Variables:</h2>
+            <pre>${JSON.stringify(envVars, null, 2)}</pre>
+            
+            <h2>Supabase URL Preview:</h2>
+            <p>${envVars.VITE_SUPABASE_URL ? envVars.VITE_SUPABASE_URL.substring(0, 30) + '...' : 'MISSING'}</p>
+        `;
+    </script>
+</body>
+</html>
