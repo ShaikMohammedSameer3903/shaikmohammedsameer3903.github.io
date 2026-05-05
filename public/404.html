@@ -4,19 +4,13 @@
     <meta charset="utf-8">
     <title>PipelinePro Redirect</title>
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 0;
-
+      // Simple SPA redirect for GitHub Pages
       var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+      // This will redirect /auth/callback to /?p=/auth/callback
+      var path = l.pathname.replace(/^\/|\/$/g, '');
+      var query = l.search ? l.search.replace(/&/g, '~and~') : '';
+      var redirectUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/?p=' + path + (query ? '&q=' + query : '') + l.hash;
+      l.replace(redirectUrl);
     </script>
   </head>
   <body>

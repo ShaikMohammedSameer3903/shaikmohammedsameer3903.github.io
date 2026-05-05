@@ -6,17 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PipeLinePro | Advanced CI/CD Builder</title>
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
       (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
+        var params = new URLSearchParams(l.search);
+        var p = params.get('p');
+        if (p) {
+          var q = params.get('q') ? params.get('q').replace(/~and~/g, '&') : '';
+          var newUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/' + p + (q ? '?' + q : '') + l.hash;
+          window.history.replaceState(null, null, newUrl);
         }
       }(window.location))
     </script>
