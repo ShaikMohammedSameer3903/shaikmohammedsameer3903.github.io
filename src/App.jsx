@@ -33,24 +33,37 @@ const PageLoader = () => (
 function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [authResolved, setAuthResolved] = useState(false);
 
   useEffect(() => {
-    // 1. Initial session check
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+    const initializeAuth = async () => {
+      // Wait for Supabase to process URL and detect session
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // 1. Initial session check
+      const { data: { session: initialSession } } = await supabase.auth.getSession();
+      console.log('[App] Initial session:', !!initialSession);
+      setSession(initialSession);
+      setAuthResolved(true);
       setLoading(false);
-    });
 
-    // 2. Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setLoading(false);
-    });
+      // 2. Listen for auth changes
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        console.log('[App] Auth state changed:', _event, !!session);
+        setSession(session);
+        setLoading(false);
+      });
 
-    return () => subscription.unsubscribe();
+      return () => subscription.unsubscribe();
+    };
+
+    initializeAuth();
   }, []);
 
-  if (loading) return <PageLoader />;
+  // Don't render app until auth is resolved
+  if (loading || !authResolved) {
+    return <PageLoader />;
+  }
 
   return (
     <ErrorBoundary>

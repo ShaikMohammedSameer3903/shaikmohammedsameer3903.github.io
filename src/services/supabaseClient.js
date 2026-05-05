@@ -24,8 +24,14 @@ if (!supabaseUrl || !supabaseKey) {
   try {
     // Validate URL format
     new URL(supabaseUrl);
-    supabase = createClient(supabaseUrl, supabaseKey);
-    console.log('[Supabase] Client created successfully');
+    supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+    console.log('[Supabase] Client created successfully with session persistence');
   } catch (error) {
     console.warn("⚠️ Supabase client creation failed:", error.message, "— running without auth/database.");
     supabase = null;
@@ -33,5 +39,3 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 export { supabase };
-
-
