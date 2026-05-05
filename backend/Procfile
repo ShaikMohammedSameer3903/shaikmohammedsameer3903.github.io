@@ -1,0 +1,19 @@
+# Backend Deployment Configuration for Render
+
+## Procfile
+web: node server.js
+
+## Environment Variables for Render
+```
+PORT=3001
+NODE_ENV=production
+CORS_ORIGIN=https://ShaikMohammedSameer3903.github.io/PipeLinePro
+SUPABASE_URL=https://exbqiyzumwirfbupgcnu.supabase.co
+SUPABASE_ANON_KEY=sb_publishable_SoaZn-WHZYd7astg78aCqA_CZObbegh
+```
+
+## Build Command
+npm install
+
+## Start Command  
+node server.js

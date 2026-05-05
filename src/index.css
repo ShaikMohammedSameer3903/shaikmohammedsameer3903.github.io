@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    min-height: 100%;
+    overflow-x: hidden;
+    @apply bg-slate-50 text-slate-900;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Safe area support for notched devices */
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@layer components {
+  .sidebar-button {
+    @apply w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-surface-secondary hover:translate-x-1;
+  }
+
+  .sidebar-button.active {
+    @apply bg-blue-600 text-white shadow-lg;
+  }
+
+  .control-dropdown {
+    @apply w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200;
+  }
+
+  .action-button {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95;
+  }
+
+  .terminal-box {
+    @apply bg-gray-900 border border-slate-700 rounded-2xl p-4 sm:p-6 font-mono text-sm text-green-400 overflow-auto min-h-[200px] sm:min-h-[300px];
+  }
+
+  .graph-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .job-card {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+
+  .main-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 16px;
+  }
+
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar for dark panels */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 4px;
+  }
+
+  /* Monaco Ghost Text */
+  .monaco-ghost-text {
+    opacity: 0.4;
+    font-style: italic;
+    pointer-events: none;
+  }
+
+  /* React Flow Styles */
+  .react-flow__node {
+    font-family: inherit;
+  }
+
+  .react-flow__edge-path {
+    stroke-width: 2;
+    stroke: #64748b;
+  }
+
+  .react-flow__handle {
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border: 2px solid white;
+  }
+}
+
+@layer utilities {
+  /* Touch-friendly minimum tap target */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .graph-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-container {
+    padding: 12px;
+  }
+
+  /* Prevent text selection on interactive elements on mobile */
+  button, a, [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}

@@ -1,0 +1,67 @@
+{"level":"info","message":"✅ Environment variables validated successfully.","service":"pipeline-pro-api","timestamp":"2026-05-04 09:09:58"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 09:09:58"}
+{"duration":4,"ip":"::1","level":"info","message":"GET /api/health 200 4ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 09:10:21","url":"/api/health"}
+{"duration":0,"ip":"::1","level":"info","message":"GET /api/pipelines 200 0ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 09:10:59","url":"/api/pipelines"}
+{"duration":1198,"ip":"::1","level":"info","message":"POST /api/ai/process 200 1198ms","method":"POST","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 09:11:06","url":"/api/ai/process"}
+{"duration":1,"ip":"::1","level":"info","message":"GET /api/health 200 1ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 09:12:24","url":"/api/health"}
+{"duration":616,"ip":"::1","level":"info","message":"POST /api/ai/process 200 616ms","method":"POST","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 09:12:25","url":"/api/ai/process"}
+{"level":"info","message":"✅ Environment variables set for testing.","service":"pipeline-pro-api","timestamp":"2026-05-04 12:30:16"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 12:30:16"}
+{"level":"info","message":"✅ Environment variables set for testing.","service":"pipeline-pro-api","timestamp":"2026-05-04 12:31:39"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 12:31:39"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 13:59:20"}
+{"duration":6,"ip":"::1","level":"info","message":"GET /api/health 200 6ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 13:59:29","url":"/api/health"}
+{"duration":2,"ip":"::1","level":"info","message":"GET /api/pipelines 200 2ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 13:59:35","url":"/api/pipelines"}
+{"duration":9,"ip":"::1","level":"info","message":"GET /api/profile 401 9ms","method":"GET","service":"pipeline-pro-api","status":401,"timestamp":"2026-05-04 13:59:42","url":"/api/profile"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 18:59:26"}
+{"duration":16,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 16ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 19:01:01","url":"/api/ai/fix-all"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:02:27"}
+{"duration":72,"ip":"::1","level":"info","message":"POST /api/ai/process 200 72ms","method":"POST","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 19:02:38","url":"/api/ai/process"}
+{"duration":3,"ip":"::1","level":"info","message":"POST /api/ai/process 200 3ms","method":"POST","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 19:04:08","url":"/api/ai/process"}
+{"duration":2,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 2ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 19:06:26","url":"/api/ai/fix-all"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:09:19"}
+{"duration":20,"ip":"::1","level":"info","message":"GET /api/ai/test 404 20ms","method":"GET","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 19:12:18","url":"/api/ai/test"}
+{"duration":4,"ip":"::1","level":"info","message":"POST /api/ai/process 200 4ms","method":"POST","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 19:17:00","url":"/api/ai/process"}
+{"duration":1,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 1ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 19:18:50","url":"/api/ai/fix-all"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 19:25:04"}
+{"duration":11,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 11ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 19:25:27","url":"/api/ai/fix-all"}
+{"duration":5,"ip":"::1","level":"info","message":"GET /api/health 200 5ms","method":"GET","service":"pipeline-pro-api","status":200,"timestamp":"2026-05-04 21:25:37","url":"/api/health"}
+{"duration":3,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 3ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 21:25:41","url":"/api/ai/fix-all"}
+{"duration":1,"ip":"::1","level":"info","message":"POST /api/ai/fix-all 404 1ms","method":"POST","service":"pipeline-pro-api","status":404,"timestamp":"2026-05-04 21:26:48","url":"/api/ai/fix-all"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 22:02:45"}
+{"level":"warn","message":"⚠️  OPENAI_API_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
+{"level":"warn","message":"⚠️  SUPABASE_URL not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
+{"level":"warn","message":"⚠️  SUPABASE_ANON_KEY not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
+{"level":"warn","message":"⚠️  SUPABASE_JWT_SECRET not set, using development default","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
+{"level":"info","message":"✅ Environment validation complete.","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
+{"level":"warn","message":"⚠️ No REDIS_URL found. WebSocket scaling limited to single instance.","service":"pipeline-pro-api","timestamp":"2026-05-04 22:21:21"}
