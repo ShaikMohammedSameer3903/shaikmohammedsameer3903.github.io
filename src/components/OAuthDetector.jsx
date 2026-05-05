@@ -7,59 +7,44 @@ function OAuthDetector() {
   const location = useLocation();
 
   useEffect(() => {
-    const checkForOAuthTokens = async () => {
-      console.log("[OAuthDetector] Checking URL for OAuth tokens");
-      console.log("[OAuthDetector] Current location:", location.pathname + location.search + location.hash);
+    const handleOAuth = async () => {
+      // 1. Check if tokens are in the hash (Supabase standard)
+      const hash = window.location.hash || location.hash;
+      if (!hash || !hash.includes('access_token=')) return;
+
+      console.log("[OAuthDetector] Detecting tokens in hash...");
+
+      // Parse hash manually to be safe with HashRouter
+      const hashContent = hash.includes('#') ? hash.split('#')[1] : hash;
+      const actualTokens = hashContent.includes('#') ? hashContent.split('#')[1] : hashContent;
       
-      // Check URL hash for OAuth tokens
-      const hashParams = new URLSearchParams(location.hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
-      
-      if (accessToken) {
-        console.log("[OAuthDetector] ✅ Found OAuth tokens in URL");
-        console.log("[OAuthDetector] Access token present:", !!accessToken);
-        console.log("[OAuthDetector] Refresh token present:", !!refreshToken);
-        
-        // Wait for Supabase to process the tokens
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Try to get the session
+      const params = new URLSearchParams(actualTokens.startsWith('?') ? actualTokens : '?' + actualTokens);
+      const accessToken = params.get('access_token');
+      const refreshToken = params.get('refresh_token');
+
+      if (accessToken && refreshToken) {
+        console.log("[OAuthDetector] Tokens found, setting session...");
         try {
-          const { data, error } = await supabase.auth.getSession();
-          console.log("[OAuthDetector] Session check result:", { 
-            hasSession: !!data.session, 
-            error: error?.message,
-            userEmail: data.session?.user?.email 
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
           });
-          
-          if (data.session) {
-            console.log("[OAuthDetector] ✅ Session established, navigating to dashboard");
-            navigate("/dashboard", { replace: true });
-          } else {
-            console.error("[OAuthDetector] ❌ No session found after OAuth");
-            navigate("/login", { replace: true });
-          }
-        } catch (e) {
-          console.error("[OAuthDetector] Error checking session:", e);
+
+          if (error) throw error;
+
+          console.log("[OAuthDetector] Session set successfully, redirecting to dashboard");
+          navigate("/dashboard", { replace: true });
+        } catch (err) {
+          console.error("[OAuthDetector] Error setting session:", err.message);
           navigate("/login", { replace: true });
         }
-      } else {
-        console.log("[OAuthDetector] No OAuth tokens found in URL");
       }
     };
 
-    checkForOAuthTokens();
-  }, [navigate, location]);
+    handleOAuth();
+  }, [location, navigate]);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f9fafb]">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-blue-600 mx-auto mb-4" />
-        <p className="text-slate-500 font-semibold text-sm">Processing authentication...</p>
-      </div>
-    </div>
-  );
+  return null;
 }
 
 export default OAuthDetector;

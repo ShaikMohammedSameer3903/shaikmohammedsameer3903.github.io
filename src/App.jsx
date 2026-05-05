@@ -49,9 +49,10 @@ function App() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/auth/callback" element={<OAuthCallback />} />
-                    <Route path="/callback" element={<OAuthCallback />} />
-                    <Route path="/auth/callback/*" element={<OAuthCallback />} />
+                    
+                    {/* Simplified Callback Route */}
+                    <Route path="/auth/callback" element={<OAuthDetector />} />
+                    <Route path="/callback" element={<OAuthDetector />} />
 
                     {/* Protected Routes — redirect to /login only if not authenticated */}
                     <Route element={<ProtectedRoute />}>
