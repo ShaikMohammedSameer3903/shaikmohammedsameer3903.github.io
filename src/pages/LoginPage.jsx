@@ -27,12 +27,9 @@ function LoginPage() {
   // Redirect authenticated users to dashboard ONLY when auth is ready
   React.useEffect(() => {
     if (authReady && !loading && isAuthenticated) {
-      const from = location.state?.from?.pathname || '/dashboard';
-      // Ensure we don't redirect back to login or root if we're already trying to go somewhere
-      const target = (from === '/login' || from === '/') ? '/dashboard' : from;
-      navigate(target, { replace: true });
+      navigate('/dashboard', { replace: true });
     }
-  }, [isAuthenticated, loading, authReady, navigate, location.state]);
+  }, [isAuthenticated, loading, authReady, navigate]);
 
   if (loading || !authReady) {
     return (
