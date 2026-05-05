@@ -8,8 +8,9 @@ import { ToastProvider } from './components/ToastProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
-import ErrorBoundary from './components/ErrorBoundary';
-import SessionManager from './components/SessionManager';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { SessionManager } from './components/SessionManager';
+import { OAuthDetector } from './components/OAuthDetector';
 
 // Lazy load pages with error handling for code splitting
 const LandingPage = lazy(() => import('./pages/LandingPage'));
@@ -40,6 +41,7 @@ function App() {
           <NotificationProvider>
             <PipelineProvider>
               <SessionManager />
+              <OAuthDetector />
               <Router>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
@@ -48,6 +50,8 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/auth/callback" element={<OAuthCallback />} />
+                    <Route path="/callback" element={<OAuthCallback />} />
+                    <Route path="/auth/callback/*" element={<OAuthCallback />} />
 
                     {/* Protected Routes — redirect to /login only if not authenticated */}
                     <Route element={<ProtectedRoute />}>
