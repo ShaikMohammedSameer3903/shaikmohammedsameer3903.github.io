@@ -8,7 +8,7 @@ import { ToastProvider } from './components/ToastProvider';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import ErrorBoundary from './components/ErrorBoundary';
 import { SessionManager } from './components/SessionManager';
 import { OAuthDetector } from './components/OAuthDetector';
 
