@@ -36,6 +36,13 @@ function App() {
   const [authResolved, setAuthResolved] = useState(false);
 
   useEffect(() => {
+    // 1. Handle SPA Redirect from 404.html
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get("redirect");
+    if (redirect) {
+      window.history.replaceState(null, "", decodeURIComponent(redirect));
+    }
+
     const initializeAuth = async () => {
       // Wait for Supabase to process URL and detect session
       await new Promise(resolve => setTimeout(resolve, 300));
